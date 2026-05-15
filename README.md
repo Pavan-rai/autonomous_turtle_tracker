@@ -11,7 +11,7 @@ The project demonstrates real-world robotics concepts such as autonomous navigat
 
 ## Project Video
 
-[Uploading Screencast from 05-15-2026 08:52:22 PM.webm…]()
+https://github.com/Pavan-rai/autonomous_turtle_tracker/blob/main/demo.mp4
 
 
 ### Autonomous behavior
