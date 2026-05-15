@@ -1,56 +1,106 @@
-# ROS2 Autonomous Target Tracking (Turtlesim Catch Them All)
+# 🐢 ROS2 Autonomous Target Tracking — Turtlesim Catch Them All
 
-A ROS2-based autonomous turtle tracking system where a controller turtle detects, chases, and catches spawned turtles inside `turtlesim`.
 
-This project demonstrates:
+A ROS2-based autonomous turtle tracking system where a controller turtle intelligently detects, pursues, and catches dynamically spawned turtles inside `turtlesim`.
 
-- ROS2 Publishers/Subscribers
-- Custom Messages
-- Custom Services
-- Launch Files
-- YAML Parameter Configuration
-- Autonomous Motion Control
-- Multi-node Communication
-- Async Service Calls
+The project demonstrates real-world robotics concepts such as autonomous navigation, ROS2 communication, custom interfaces, services, and multi-node robotic architecture.
 
 ---
 
-## Demo
+# 🎥 Demo
 
-Main turtle automatically:
+## Project Video
 
-- Detects spawned turtles
-- Chooses nearest target
-- Navigates toward target
-- Removes target after catching it
-- Continues until all turtles are removed
+[Uploading Screencast from 05-15-2026 08:52:22 PM.webm…]()
 
----
 
-## Project Architecture
+### Autonomous behavior
 
-### Nodes
-
-### 1. `turtle_spawner`
-Responsible for:
-
-- Spawning new turtles
-- Publishing alive turtles list
-- Killing turtles when requested
-
-### 2. `turtle_controller`
-Responsible for:
-
-- Subscribing to turtle positions
-- Selecting nearest turtle
-- Moving toward target
-- Calling catch service
+✅ Detect spawned turtles  
+✅ Track nearest target  
+✅ Navigate autonomously  
+✅ Catch and remove turtles  
+✅ Continue until all turtles are eliminated  
 
 ---
 
-## Custom Interfaces
+# ✨ Features
 
-### `Turtle.msg`
+- Dynamic turtle spawning
+- Nearest target selection algorithm
+- Autonomous target pursuit
+- Async service communication
+- YAML configurable parameters
+- Custom ROS messages and services
+- Multi-node architecture
+- Launch file automation
+- Modular ROS2 package design
+
+---
+
+# 🏗 System Architecture
+
+```text
+                +------------------+
+                | turtle_spawner   |
+                +------------------+
+                         |
+                         | publishes
+                         ↓
+
+                +------------------+
+                | Alive Turtles    |
+                | TurtleArray.msg  |
+                +------------------+
+                         |
+                         ↓ subscribes
+
+                +------------------+
+                | turtle_controller|
+                +------------------+
+                         |
+                  computes target
+                         ↓
+
+                 Velocity Commands
+                         ↓
+
+                 Controller Turtle
+                         ↓
+
+                    Catch Service
+```
+
+---
+
+# 🔧 Nodes
+
+## 1️⃣ turtle_spawner
+
+Responsibilities:
+
+- Spawn turtles dynamically
+- Publish alive turtles list
+- Handle turtle removal requests
+- Manage turtle lifecycle
+
+---
+
+## 2️⃣ turtle_controller
+
+Responsibilities:
+
+- Subscribe to turtle positions
+- Select nearest turtle
+- Compute movement commands
+- Move toward target
+- Call catch service asynchronously
+
+---
+
+# 📦 Custom Interfaces
+
+## Turtle.msg
 
 ```text
 string name
@@ -61,15 +111,15 @@ float64 theta
 
 ---
 
-### `TurtleArray.msg`
+## TurtleArray.msg
 
 ```text
-my_robot_interfaces/msg/Turtle[] turtles
+Turtle[] turtles
 ```
 
 ---
 
-### `CatchTurtle.srv`
+## CatchTurtle.srv
 
 ```text
 string name
@@ -79,75 +129,89 @@ bool success
 
 ---
 
-## Technologies Used
+# ⚙ Technologies Used
 
 - ROS2 Humble
 - Python
 - Turtlesim
-- Custom ROS Interfaces
 - YAML
-- Git/GitHub
+- Custom ROS Interfaces
+- Git + GitHub
 
 ---
 
-## Project Structure
+# 📂 Project Structure
 
 ```bash
-ros2_ws/
+autonomous_turtle_tracker/
 │
-├── src/
-│   ├── my_robot_interfaces/
-│   ├── turtlesim_catch_them_all/
-│   └── my_robot_bringup/
+├── my_robot_interfaces/
+│   ├── msg/
+│   │   ├── Turtle.msg
+│   │   └── TurtleArray.msg
+│   │
+│   └── srv/
+│       └── CatchTurtle.srv
 │
-├── build/
-├── install/
-└── log/
+├── turtlesim_catch_them_all/
+│   ├── launch/
+│   ├── config/
+│   ├── scripts/
+│   └── package.xml
+│
+├── my_robot_bringup/
+│
+└── README.md
 ```
 
 ---
 
-## Features
-
-- Dynamic turtle spawning
-- Nearest turtle tracking
-- Configurable spawn frequency
-- Custom turtle naming
-- YAML-based parameter tuning
-- Launch file automation
-
----
-
-## Parameter Configuration
+# ⚙ Parameter Configuration
 
 Example:
 
 ```yaml
-/turtle_controller:
+/ turtle_controller:
   ros__parameters:
     catch_closest_turtle_first: true
 
-/turtle_spawner:
+/ turtle_spawner:
   ros__parameters:
     turtle_name_prefix: "my_turtle"
     spawn_frequency: 1.5
 ```
 
+Parameters can be modified without changing source code.
+
 ---
 
-## Run Project
+# 🚀 Installation
 
-### Build workspace
+Clone repository:
 
 ```bash
-cd ~/ros2_ws
+git clone https://github.com/Pavan-rai/autonomous_turtle_tracker.git
+
+cd autonomous_turtle_tracker
+```
+
+Build workspace:
+
+```bash
 colcon build
+```
+
+Source setup:
+
+```bash
 source install/setup.bash
 ```
 
 ---
 
-### Launch project
+# ▶ Run Project
+
+Launch complete system:
 
 ```bash
 ros2 launch my_robot_bringup turtlesim_catch_them_all.launch.xml
@@ -155,43 +219,62 @@ ros2 launch my_robot_bringup turtlesim_catch_them_all.launch.xml
 
 ---
 
-## ROS Concepts Demonstrated
+# 🧠 Workflow
 
-- Publisher/Subscriber communication
-- Service communication
-- Custom interfaces
-- Motion planning basics
-- Parameter server usage
-- Multi-node robotics systems
+1. Spawn turtles dynamically  
+2. Publish alive turtle list  
+3. Controller subscribes  
+4. Find nearest target  
+5. Compute velocity commands  
+6. Move toward target  
+7. Call catch service  
+8. Remove turtle  
+9. Repeat until all turtles are caught  
 
 ---
 
-## Future Improvements
+# 📚 ROS2 Concepts Demonstrated
 
+- Publisher / Subscriber communication
+- Services and async calls
+- Custom interfaces
+- YAML parameters
+- Launch files
+- Multi-node systems
+- Autonomous decision making
+
+---
+
+# 🔮 Future Improvements
+
+- PID motion controller
 - Path optimization
 - Obstacle avoidance
 - Gazebo integration
-- TurtleBot implementation
+- TurtleBot deployment
 - Computer vision target detection
-- Reinforcement learning for navigation
+- Reinforcement learning navigation
 
 ---
 
-## Why This Project?
+# 🎯 Why This Project?
 
-This project was built to strengthen practical understanding of ROS2 architecture and autonomous robotics systems.
+This project was built to strengthen practical understanding of ROS2 architecture and autonomous robotic systems.
 
-It simulates real-world robotics concepts like:
+It simulates real robotics concepts such as:
 
-- Target tracking
 - Autonomous navigation
+- Target tracking
 - Distributed node communication
+- Real-time control
 - Robot decision-making
 
 ---
 
-## Author
+# 👨‍💻 Author
 
 **Pavan Rai**
 
-GitHub: https://github.com/pavan123437
+GitHub: https://github.com/Pavan-rai
+
+If you found this project useful, consider giving it a ⭐
